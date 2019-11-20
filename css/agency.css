@@ -30,9 +30,6 @@ a.active {
 a {
   color: #056839;
 }
-a .contact {
-	color: #000000
-}
 a:hover,
 a:focus,
 a:active,
