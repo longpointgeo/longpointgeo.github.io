@@ -569,8 +569,13 @@ section#contact .container a{
   color: white;
   font-size: 18px;
 }
-section#contact .container a:active{
+section#contact .container a:hover,
+section#contact .container a:focus,
+section#contact .container a:active,
+section#contact .container a.active{
   outline: none;
+}
+section#contact .container a.active{
   color: #fec503;
 }
 section#contact .section-heading {
