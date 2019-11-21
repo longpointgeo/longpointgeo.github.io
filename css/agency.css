@@ -30,7 +30,6 @@ a.active {
 a {
   color: #056839;
   font-size: 18px;
-  background-color: rgba(0,0,0,0.75);
 }
 a:hover,
 a:focus,
