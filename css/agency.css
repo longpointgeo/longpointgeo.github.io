@@ -559,11 +559,15 @@ section#contact {
   background-repeat: no-repeat;
 }
 section#contact .container{
-  background: rgba(0,0,0,0.25);
+  background: rgba(0,0,0,0.4);
   padding: 4px 8px;
 }
 section#contact .container .facolor{
   color: white;
+}
+section#contact .container p{
+  color: white;
+  font-size: 18px;
 }
 section#contact .section-heading {
   color: white;
