@@ -29,6 +29,8 @@ a.active {
 }
 a {
   color: #056839;
+  font-size: 18px;
+  background-color: rgba(0,0,0,0.75);
 }
 a:hover,
 a:focus,
@@ -558,7 +560,7 @@ section#contact {
   background-repeat: no-repeat;
 }
 section#contact .section-heading {
-  color: black;
+  color: white;
 }
 section#contact .form-group {
   margin-bottom: 25px;
