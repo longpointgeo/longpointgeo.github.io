@@ -571,6 +571,7 @@ section#contact .container a:focus,
 section#contact .container a:active,
 section#contact .container a.active {
   outline: none;
+  text-decoration: none;
 }
 section#contact .container a {
   color: white;
