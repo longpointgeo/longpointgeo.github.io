@@ -565,7 +565,7 @@ section#contact .container{
 section#contact .container .facolor{
   color: white;
 }
-section#contact .container p{
+section#contact .container a{
   color: white;
   font-size: 18px;
 }
