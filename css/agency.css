@@ -559,9 +559,8 @@ section#contact {
   background-repeat: no-repeat;
 }
 section#contact .container{
-  background: rgba(0,0,0,0.9);
+  background: rgba(0,0,0,0.25);
   padding: 4px 8px;
-  margin: 0;
 }
 section#contact .section-heading {
   color: white;
