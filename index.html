@@ -23,6 +23,10 @@
 
     <!-- Theme CSS -->
     <link href="css/agency.min.css" rel="stylesheet">
+	
+	<!-- Mapbox GL JS -->
+	<script src='https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.js'></script>
+	<link href='https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.css' rel='stylesheet' />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -145,47 +149,19 @@
             </div>
             <div class="row">
                 <div class="col-lg-4 col-md-6 text-center portfolio-item">
-                    <a href="img/portfolio/fullsize/placeholder.jpg" class="portfolio-link" data-toggle="modal">
-                        <div class="portfolio-hover">
-                            <div class="portfolio-hover-content">
-                                <i class="fa fa-plus fa-3x"></i>
-                            </div>
-                        </div>
-                        <img src="img/portfolio/thumbnails/placeholder.jpg" class="img-responsive" alt="">
-                    </a>
+                    <div id='map' style='width: 400px; height: 300px;'></div>
+					<script>
+						mapboxgl.accessToken = 'pk.eyJ1IjoibG9uZ3BvaW50Z2VvIiwiYSI6ImNrYnNnanI0ZjAxYjAyem9jc2x6MGc2cmQifQ.HY29j88GRHL3KBKkzCEVlw';
+						var map = new mapboxgl.Map({
+						container: 'map',
+						style: 'mapbox://styles/mapbox/light-v10'
+						});
+					</script>
                     <div class="portfolio-caption">
                         <h4>Placeholder</h4>
                         <p class="text-muted">Placeholder text</p>
                     </div>
-                </div>
-                <div class="col-lg-4 col-md-6 text-center portfolio-item">
-                    <a href="img/portfolio/fullsize/placeholder.jpg" class="portfolio-link" data-toggle="modal">
-                        <div class="portfolio-hover">
-                            <div class="portfolio-hover-content">
-                                <i class="fa fa-plus fa-3x"></i>
-                            </div>
-                        </div>
-                        <img src="img/portfolio/thumbnails/placeholder.jpg" class="img-responsive" alt="">
-                    </a>
-                    <div class="portfolio-caption">
-                        <h4>Placeholder</h4>
-                        <p class="text-muted">Placeholder text</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 text-center portfolio-item">
-                    <a href="img/portfolio/fullsize/placeholder.jpg" class="portfolio-link" data-toggle="modal">
-                        <div class="portfolio-hover">
-                            <div class="portfolio-hover-content">
-                                <i class="fa fa-plus fa-3x"></i>
-                            </div>
-                        </div>
-                        <img src="img/portfolio/thumbnails/placeholder.jpg" class="img-responsive" alt="">
-                    </a>
-                    <div class="portfolio-caption">
-                        <h4>Placeholder</h4>
-                        <p class="text-muted">Placeholder text</p>
-                    </div>
-                </div>
+                </div>             
 			</div>
 		</div>
     </section> 
