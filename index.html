@@ -159,18 +159,21 @@
 						zoom: 1
 						});
 						
+						// load project locations
 						map.on('load', function () {
 							map.addSource("project", {
 								"type": "geojson",
 								"data": "./webmaps/projloc.geojson"
 							});
 							
+							// load map icons
 							map.loadImage(
 								'https://upload.wikimedia.org/wikipedia/commons/7/7c/201408_cat.png',
 								function(error, image) {
 									if (error) throw error;
 									map.addImage('lpgicon', image);
 
+								// add project locations to the map
 								map.addLayer({
 									'id': 'projects',
 									'type': 'symbol',
@@ -180,6 +183,34 @@
 										'icon-size': 0.25
 									}
 								});
+							});
+							
+							// define on-click popups
+							map.on('click', 'projects', function(e) {
+								var coordinates = e.features[0].geometry.coordinates.slice();
+								var description = e.features[0].properties.description;
+ 
+							// Ensure that if the map is zoomed out such that multiple
+							// copies of the feature are visible, the popup appears
+							// over the copy being pointed to.
+							while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+							coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+							}
+							 
+							new mapboxgl.Popup()
+							.setLngLat(coordinates)
+							.setHTML(description)
+							.addTo(map);
+							});
+							 
+							// Change the cursor to a pointer when the mouse is over the places layer.
+							map.on('mouseenter', 'projects', function() {
+							map.getCanvas().style.cursor = 'pointer';
+							});
+							 
+							// Change it back to a pointer when it leaves.
+							map.on('mouseleave', 'projects', function() {
+							map.getCanvas().style.cursor = '';
 							});
 						});
 					</script>
