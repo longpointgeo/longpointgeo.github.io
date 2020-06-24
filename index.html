@@ -190,8 +190,7 @@
 								var coordinates = e.features[0].geometry.coordinates.slice();
 								var img = e.features[0].properties.img;
 								var client = e.features[0].properties.Client;
-								var project = e.features[0].properties.Project;
-								var time = e.features[0].properties.Time;								
+								var project = e.features[0].properties.Project;														
  
 							// Ensure that if the map is zoomed out such that multiple
 							// copies of the feature are visible, the popup appears
@@ -202,7 +201,7 @@
 							 
 							new mapboxgl.Popup()
 							.setLngLat(coordinates)
-							.setHTML(client + ' ' + project + ' Project' + '<p><br></p>'+time+'<p><br></p>'+img)
+							.setHTML(client + "'s " + project + " Project" + "<p><br></p>" +img)
 							.addTo(map);
 							});
 							 
