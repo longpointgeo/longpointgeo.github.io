@@ -188,7 +188,11 @@
 							// define on-click popups
 							map.on('click', 'projects', function(e) {
 								var coordinates = e.features[0].geometry.coordinates.slice();
-								var description = e.features[0].properties.description;
+								var img = e.features[0].properties.img;
+								var client = e.features[0].properties.Client;
+								var project = e.features[0].properties.Project;
+								var time = e.features[0].properties.Time;
+								
  
 							// Ensure that if the map is zoomed out such that multiple
 							// copies of the feature are visible, the popup appears
@@ -199,7 +203,7 @@
 							 
 							new mapboxgl.Popup()
 							.setLngLat(coordinates)
-							.setHTML(description)
+							.setHTML(client + ' ' + project + 'project' + '<br>' + time + '<br>'+ img)
 							.addTo(map);
 							});
 							 
