@@ -164,16 +164,23 @@
 								"type": "geojson",
 								"data": "./webmaps/projloc.geojson"
 							});
+							
+							map.loadImage(
+								'https://upload.wikimedia.org/wikipedia/commons/7/7c/201408_cat.png',
+								function(error, image) {
+									if (error) throw error;
+									map.addImage('lpgicon', image);
 
-							map.addLayer({
-								"id": "project",
-								"type": "circle",
-								"source": "project",
-								"paint": {
-									"circle-radius": 5,
-									"circle-color": "#ff0000"
-								}
-							});
+								map.addLayer({
+									"id": "project",
+									"type": "circle",
+									"source": "project",
+									"layout": {
+										"icon-image": 'lpgicon',
+										"icon-size": 0.25
+									}
+								});
+							)
 						});
 					</script>
                     <div class="portfolio-caption">
