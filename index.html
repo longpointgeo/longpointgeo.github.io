@@ -158,6 +158,22 @@
 						center: [-2.991725, 40.814306],
 						zoom: 1
 						});
+						
+						map.on('load', function () {
+							map.addSource("project", {
+								"type": "geojson",
+								"data": "./webmaps/projloc.geojson"
+						});
+
+						map.addLayer({
+							"id": "project",
+							"type": "circle",
+							"source": "project",
+							"paint": {
+								"circle-radius": 5,
+								"circle-color": "#ff0000"
+							}
+						});
 					</script>
                     <div class="portfolio-caption">
                         <h4>Placeholder</h4>
@@ -235,7 +251,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4">
-                    <span class="copyright">Copyright &copy; Long Point Geologic Ltd. 2019</span>
+                    <span class="copyright">Copyright &copy; Long Point Geologic Ltd. 2020</span>
                 </div>
             </div>
         </div>
