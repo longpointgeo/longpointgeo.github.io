@@ -163,9 +163,7 @@
 						});
 						
 						// load project locations
-						map.on('load', function () {
-							var geojson = {
-							
+						map.on('load', function () {													
 							map.addSource('projects', {
 								type: 'geojson',
 								data: './webmaps/projloc.geojson',
