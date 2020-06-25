@@ -164,6 +164,8 @@
 						
 						// load project locations
 						map.on('load', function () {
+							var geojson = {
+							
 							map.addSource('projects', {
 								type: 'geojson',
 								data: './webmaps/projloc.geojson',
@@ -173,7 +175,7 @@
 							});
 							
 							// fit map bounds to projects
-							var bounds = turf.bbox(projects);
+							var bounds = turf.bbox(map.getSource('projects');
 							map.fitBounds(bounds, {padding: 20});							
 							
 							// load map icons
