@@ -191,7 +191,7 @@
 										//   * Yellow, 30px circles when point count is between 100 and 750
 										//   * Pink, 40px circles when point count is greater than or equal to 750
 										'circle-color': '#265E33',											
-										'circle-radius': 30
+										'circle-radius': 20
 									}
 								});
 								
@@ -204,7 +204,8 @@
 									layout: {
 									'text-field': '{point_count_abbreviated}',
 									'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
-									'text-size': 12
+									'text-size': 18,
+									"text-color": "#ffffff"
 									}
 								});
 								
@@ -242,7 +243,7 @@
 							});
 							
 							// define unclustered on-click popups
-							map.on('click', 'projects', function(e) {
+							map.on('click', 'project', function(e) {
 								var coordinates = e.features[0].geometry.coordinates.slice();
 								var img = e.features[0].properties.img;
 								var client = e.features[0].properties.Client;
@@ -262,12 +263,12 @@
 							});
 							 
 							// Change the cursor to a pointer when the mouse is over the places layer.
-							map.on('mouseenter', 'projects', function() {
+							map.on('mouseenter', 'project', function() {
 							map.getCanvas().style.cursor = 'pointer';
 							});
 							 
 							// Change it back to a pointer when it leaves.
-							map.on('mouseleave', 'projects', function() {
+							map.on('mouseleave', 'project', function() {
 							map.getCanvas().style.cursor = '';
 							});
 						});
