@@ -247,7 +247,12 @@
 								var coordinates = e.features[0].geometry.coordinates.slice();
 								var img = e.features[0].properties.img;
 								var client = e.features[0].properties.Client;
-								var project = e.features[0].properties.Project;														
+								var project = e.features[0].properties.Project;	
+								
+							map.easeTo({
+								center: e.features[0].geometry.coordinates,
+								zoom: zoom
+							});								
  
 							// Ensure that if the map is zoomed out such that multiple
 							// copies of the feature are visible, the popup appears
