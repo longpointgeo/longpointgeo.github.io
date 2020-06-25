@@ -163,9 +163,12 @@
 						
 						// load project locations
 						map.on('load', function () {
-							map.addSource("project", {
-								"type": "geojson",
-								"data": "./webmaps/projloc.geojson"
+							map.addSource('projects', {
+								type: 'geojson',
+								data: './webmaps/projloc.geojson',
+								cluster: true,
+								clusterMaxZoom: 14, // Max zoom to cluster points on
+								clusterRadius: 50 // Radius of each cluster when clustering points (defaults to 50)
 							});
 							
 							// load map icons
@@ -175,19 +178,84 @@
 									if (error) throw error;
 									map.addImage('lpgicon', image);
 
-								// add project locations to the map
+								// add clustered project locations to the map								
 								map.addLayer({
-									'id': 'projects',
-									'type': 'symbol',
-									'source': 'project',
-									'layout': {
+									id: 'clusters',
+									type: 'circle',
+									source: 'projects',
+									filter: ['has', 'point_count'],
+									paint: {
+										// Use step expressions (https://docs.mapbox.com/mapbox-gl-js/style-spec/#expressions-step)
+										// with three steps to implement three types of circles:
+										//   * Blue, 20px circles when point count is less than 100
+										//   * Yellow, 30px circles when point count is between 100 and 750
+										//   * Pink, 40px circles when point count is greater than or equal to 750
+										'circle-color': [
+											'step',
+											['get', 'point_count'],
+											'#51bbd6',
+											100,
+											'#f1f075',
+											750,
+											'#f28cb1'
+										],
+										'circle-radius': [
+											'step',
+											['get', 'point_count'],
+											20,
+											100,
+											30,
+											750,
+											40
+										]
+									}
+								});
+								
+								// add cluster count to clusters
+								map.addLayer({
+									id: 'cluster-count',
+									type: 'symbol',
+									source: 'projects',
+									filter: ['has', 'point_count'],
+									layout: {
+									'text-field': '{point_count_abbreviated}',
+									'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+									'text-size': 12
+									}
+								});
+								
+								// add un-clustered project locations to the map
+								map.addLayer({
+									id: 'project',
+									type: 'symbol',
+									source: 'projects',
+									layout: {
 										'icon-image': 'lpgicon',
 										'icon-size': 0.15
 									}
 								});
 							});
 							
-							// define on-click popups
+							// inspect a cluster on click
+							map.on('click', 'clusters', function(e) {
+								var features = map.queryRenderedFeatures(e.point, {
+									layers: ['clusters']
+								});
+								var clusterId = features[0].properties.cluster_id;
+								map.getSource('projects').getClusterExpansionZoom(
+									clusterId,
+									function(err, zoom) {
+										if (err) return;
+ 
+										map.easeTo({
+											center: features[0].geometry.coordinates,
+											zoom: zoom
+										});
+									}
+								);
+							});
+							
+							// define unclustered on-click popups
 							map.on('click', 'projects', function(e) {
 								var coordinates = e.features[0].geometry.coordinates.slice();
 								var img = e.features[0].properties.img;
@@ -203,7 +271,7 @@
 							 
 							new mapboxgl.Popup()
 							.setLngLat(coordinates)
-							.setHTML(client + "'s " + project + " Project" +img)
+							.setHTML(client + "'s " + project + " Project<br>" +img)
 							.addTo(map);
 							});
 							 
