@@ -171,6 +171,15 @@
 								clusterRadius: 100 // Radius of each cluster when clustering points (defaults to 50)
 							});
 							
+							// fit map bounds to projects
+							var bounds = new mapboxgl.LngLatBounds();
+							
+							projects.features.forEach(function(feature){
+								bounds.extend(feature.geometry.coordinates);
+							});
+							
+							map.fitBounds(bounds);							
+							
 							// load map icons
 							map.loadImage(
 								'./img/lpgicon.png',
@@ -187,7 +196,7 @@
 									paint: {
 										'circle-color': '#265E33',											
 										'circle-radius': 25,
-										'circle-opacity': 0.5
+										'circle-opacity': 0.75
 									}
 								});
 								
