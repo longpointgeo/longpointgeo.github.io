@@ -185,13 +185,8 @@
 									source: 'projects',
 									filter: ['has', 'point_count'],
 									paint: {
-										// Use step expressions (https://docs.mapbox.com/mapbox-gl-js/style-spec/#expressions-step)
-										// with three steps to implement three types of circles:
-										//   * Blue, 20px circles when point count is less than 100
-										//   * Yellow, 30px circles when point count is between 100 and 750
-										//   * Pink, 40px circles when point count is greater than or equal to 750
 										'circle-color': '#265E33',											
-										'circle-radius': 20
+										'circle-radius': 25
 									}
 								});
 								
@@ -218,7 +213,7 @@
 									layout: {
 										'icon-image': 'lpgicon',
 										'icon-size': 0.15,
-										'icon-offset': [-20,30]
+										'icon-offset': [-20,60]
 									}
 								});
 							});
@@ -247,12 +242,7 @@
 								var coordinates = e.features[0].geometry.coordinates.slice();
 								var img = e.features[0].properties.img;
 								var client = e.features[0].properties.Client;
-								var project = e.features[0].properties.Project;	
-								
-							map.easeTo({
-								center: e.features[0].geometry.coordinates,
-								zoom: zoom
-							});								
+								var project = e.features[0].properties.Project;							
  
 							// Ensure that if the map is zoomed out such that multiple
 							// copies of the feature are visible, the popup appears
