@@ -256,6 +256,7 @@
 								var coordinates = e.features[0].geometry.coordinates.slice();
 								var img = e.features[0].properties.img;
 								var client = e.features[0].properties.Client;
+								var time = e.features[0].properties.time;
 								var project = e.features[0].properties.Project;							
  
 							// Ensure that if the map is zoomed out such that multiple
@@ -267,7 +268,11 @@
 							 
 							new mapboxgl.Popup()
 							.setLngLat(coordinates)
-							.setHTML(client + "'s " + project + " Project<br>" +img)
+							.setHTML("Client: " + client +"<br>"+
+									time +"<br>"+
+									project +"<br>"+
+									img
+									)
 							.addTo(map);
 							});
 							 
@@ -284,7 +289,8 @@
 					</script>
                     <div class="portfolio-caption">
                         <h4>For more information on the deliverables of each project</h4>
-                        <!--<p class="text-muted">Placeholder</p>-->
+                        <p class="text-muted">For more information on the deliverables of each project</p>
+						<br>
 						<a href="#contact" class="page-scroll btn btn-xl sr-button">Contact Us</a>
                     </div>
                 </div>             
