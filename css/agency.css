@@ -237,13 +237,10 @@ header {
   text-align: center;
   color: white;
 }
-header .container{
-  background: rgba(0,0,0,0.4);
-  padding: 4px 8px;
-}
 header .intro-text {
   padding-top: 100px;
   padding-bottom: 50px;
+  background: rgba(0,0,0,0.4);
 }
 header .intro-text .intro-lead-in {
   font-family: "Droid Serif", "Helvetica Neue", Helvetica, Arial, sans-serif;
