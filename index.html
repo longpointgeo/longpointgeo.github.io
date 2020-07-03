@@ -258,17 +258,7 @@
 											zoom: zoom
 										});
 									}
-								);
-							// Change the cursor to a pointer when the mouse is over the clusters.
-							map.on('mouseenter', 'clusters', function() {
-							map.getCanvas().style.cursor = 'pointer';
-							});
-							 
-							// Change it back to a pointer when it leaves.
-							map.on('mouseleave', 'clusters', function() {
-							map.getCanvas().style.cursor = '';
-							});	
-								
+								);															
 							});
 							
 							// define unclustered on-click popups
@@ -289,7 +279,7 @@
 							// ease map extents to project locations
 							map.easeTo({
 								center: e.features[0].geometry.coordinates,
-								zoom: zoom
+								zoom: 5
 							});
 							 
 							// create popup							
