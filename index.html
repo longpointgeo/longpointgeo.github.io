@@ -180,9 +180,17 @@
 								clusterRadius: 100 // Radius of each cluster when clustering points (defaults to 50)
 							});
 							
-							// TODO fit map bounds to projects
-							//var bounds = turf.bbox(map.querySourceFeatures('projects'));
-							//map.fitBounds(bounds, {padding: 20}); 						
+							// Fit map bounds to projects layer							
+							map.on('sourcedata', function (e) {
+								if (e.sourceId !== 'projects' || !e.isSourceLoaded) return
+								var f = map.querySourceFeatures('projects')
+								if (f.length === 0) return
+								var bbox = turf.bbox({
+									type: 'FeatureCollection',
+									features: f
+								});
+								map.fitBounds(bbox, {padding: 20});    
+								})
 							
 							// load map icons
 							map.loadImage(
@@ -251,6 +259,16 @@
 										});
 									}
 								);
+							// Change the cursor to a pointer when the mouse is over the clusters.
+							map.on('mouseenter', 'clusters', function() {
+							map.getCanvas().style.cursor = 'pointer';
+							});
+							 
+							// Change it back to a pointer when it leaves.
+							map.on('mouseleave', 'clusters', function() {
+							map.getCanvas().style.cursor = '';
+							});	
+								
 							});
 							
 							// define unclustered on-click popups
@@ -267,7 +285,14 @@
 							while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
 							coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
 							}
+							
+							// ease map extents to project locations
+							map.easeTo({
+								center: e.features[0].geometry.coordinates,
+								zoom: zoom
+							});
 							 
+							// create popup							
 							new mapboxgl.Popup()
 							.setLngLat(coordinates)
 							.setHTML("Client: " + client +"<br>"+
@@ -278,7 +303,7 @@
 							.addTo(map);
 							});
 							 
-							// Change the cursor to a pointer when the mouse is over the places layer.
+							// Change the cursor to a pointer when the mouse is over the projects layer.
 							map.on('mouseenter', 'project', function() {
 							map.getCanvas().style.cursor = 'pointer';
 							});
