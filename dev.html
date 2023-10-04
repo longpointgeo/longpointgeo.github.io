@@ -23,6 +23,19 @@
 
     <!-- Theme CSS -->
     <link href="css/agency.min.css" rel="stylesheet">
+	
+	<!-- Mapbox GL JS -->
+	<script src='https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.js'></script>
+	<link href='https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.css' rel='stylesheet' />
+	<script src='https://api.mapbox.com/mapbox.js/plugins/turf/v3.0.11/turf.min.js'></script>
+
+    <!-- Leaflet JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -75,8 +88,7 @@
     <header data-parallax="scroll" data-image-src="../img/header.jpg">
         <div class="container">
             <div class="intro-text">
-				<div class="intro-heading">Long Point Geologic Ltd.</div>
-                <div class="intro-lead-in">providing specialised consulting services in breccia classification, geologic mapping, and lithofacies evaluation.</div>                
+				<div class="intro-heading">Long Point Geologic Ltd.</div>             
                 <a href="#services" class="page-scroll btn btn-xl sr-button">Find Out More</a>
             </div>
         </div>
@@ -88,39 +100,64 @@
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <h2 class="section-heading">Services</h2>
-                    <h3 class="section-subheading text-muted">Long Point Geologic Ltd. is currently accepting contracts that include travel within Canada and internationally.</h3>
+                    <h3 class="section-subheading text-muted">Long Point Geologic Ltd. delivers high quality, industry best practice, 
+															mineral exploration programs from grass-roots mapping and sampling programs to early and
+															advanced stage drilling programs. We provide specialist consulting on the classification of hydrothermal and
+															volcanic breccias and lithofacies in altered and mineralized terranes.</h3>
                 </div>
             </div>
             <div class="row text-center">
-                <div class="col-md-4">
+                <!--<div class="col-md-4">-->
+				<div class="col-sm-4">
+                    <span class="fa-stack fa-4x">
+                        <i class="fa fa-circle fa-stack-2x text-primary sr-icons"></i>
+                        <i class="fa fa-list-ol fa-stack-1x fa-inverse sr-icons"></i>
+                    </span>
+                    <h4 class="service-heading">Project Management</h4>
+                    <!--<p class="text-muted">Design and execution of exploration projects from rock and soil sampling to target generation and drilling.</p>-->
+                </div>
+				<div class="col-sm-4">
                     <span class="fa-stack fa-4x">
                         <i class="fa fa-circle fa-stack-2x text-primary sr-icons"></i>
                         <i class="fa fa-sitemap fa-stack-1x fa-inverse sr-icons"></i>
                     </span>
                     <h4 class="service-heading">Breccia Classification</h4>
-                    <p class="text-muted">Hydrothermal and volcanic breccia classification including ... Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
+                    <!--<p class="text-muted">Hydrothermal and volcanic breccia classification.</p>-->
                 </div>
-                <div class="col-md-4">
+                <div class="col-sm-4">
                     <span class="fa-stack fa-4x">
                         <i class="fa fa-circle fa-stack-2x text-primary sr-icons"></i>
                         <i class="fa fa-map fa-stack-1x fa-inverse sr-icons"></i>
                     </span>
-                    <h4 class="service-heading">Geologic Mapping</h4>
-                    <p class="text-muted">Discriptive and graphic mapping including ... Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
+                    <h4 class="service-heading">Geologic Mapping and <br>Core Logging</h4>
+                    <!--<p class="text-muted">Discriptive geologic data collection for robust database compilation.</p>-->
                 </div>
-                <div class="col-md-4">
+            </div>
+			<div class="row text-center">
+				<br>
+            </div>
+			<div class="row text-center">                
+                <div class="col-sm-6">
                     <span class="fa-stack fa-4x">
                         <i class="fa fa-circle fa-stack-2x text-primary sr-icons"></i>
                         <i class="fa fa-laptop fa-stack-1x fa-inverse sr-icons"></i>
                     </span>
                     <h4 class="service-heading">3D Geologic Modeling</h4>
-                    <p class="text-muted">Lithofacies evalusation and classification using ... Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
+                    <!--<p class="text-muted">Model generation for resource evaluation</p>-->
+                </div>
+				<div class="col-sm-6">
+                    <span class="fa-stack fa-4x">
+                        <i class="fa fa-circle fa-stack-2x text-primary sr-icons"></i>
+                        <i class="fa fa-pencil fa-stack-1x fa-inverse sr-icons"></i>
+                    </span>
+                    <h4 class="service-heading">Assessment and <br>Technical Report Writing</h4>
+                    <!--<p class="text-muted">Design and execution of exploration projects from rock and soil sampling to target generation and drilling.</p>-->
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Portfolio Grid Section -->
+    <!-- Projects Section -->
     <section id="portfolio" class="bg-light-gray">
         <div class="container">
             <div class="row">
@@ -130,73 +167,282 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-4 col-md-6 text-center portfolio-item">
-                    <a href="img/portfolio/fullsize/placeholder.jpg" class="portfolio-link" data-toggle="modal">
-                        <div class="portfolio-hover">
-                            <div class="portfolio-hover-content">
-                                <i class="fa fa-plus fa-3x"></i>
-                            </div>
-                        </div>
-                        <img src="img/portfolio/thumbnails/placeholder.jpg" class="img-responsive" alt="">
-                    </a>
+                <div class="col-lg-12 text-center portfolio-item">
+                    <div id='map' style='width: auto; height: 500px;'></div>
+                        <script>
+                            const map = L.map('map').setView([20, 0], 2);
+                            //const tiles = L.tileLayer('https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile/{z}/{y}/{x}', {
+	                            //maxZoom: 20,
+	                            //attribution: 'Tiles courtesy of the <a href="https://usgs.gov/">U.S. Geological Survey</a>'
+                            
+                            const tiles = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+                                attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
+                                maxZoom: 20
+                            
+                            }).addTo(map);
+
+                            // add projects to map
+                            var projects = {
+                                "type":"FeatureCollection",
+                                "name":"projloc",
+                                "crs":{
+                                    "type":"name",
+                                    "properties":{
+                                        "name":"urn:ogc:def:crs:OGC:1.3:CRS84"
+                                    }
+                                },
+                                "features":[
+                                    {
+                                        "type":"Feature",
+                                        "properties":{
+                                            "client":"Gold Candle Ltd.",
+                                            "project":"Kerr-Addison Mine",
+                                            "Country":"Canada",
+                                            "State\/Province":"Ontario",
+                                            "Nearest Town":"Virginiatown",
+                                            "lat":48.137563,
+                                            "long":-79.57929,
+                                            "time":"March 2015 to Present",
+                                            "description":"Property and regional-scale surface exploration programs",
+                                            "img":"<img src=\".\/img\/projects\/a.JPG\">"
+                                        },
+                                        "geometry":{
+                                            "type":"Point",
+                                            "coordinates":[
+                                            -79.57929,
+                                            48.137563
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type":"Feature",
+                                        "properties":{
+                                            "client":"Almadex Minerals Ltd.",
+                                            "project":"El Cobre porphyry gold deposit",
+                                            "Country":"Mexico",
+                                            "State\/Province":"Veracruz",
+                                            "Nearest Town":"Tinajitas",
+                                            "lat":19.61809,
+                                            "long":-96.442478,
+                                            "time":"April – May 2018",
+                                            "description":"Lithofacies classification and interpretation",
+                                            "img":"<img src=\".\/img\/projects\/b.jpeg\">"
+                                        },
+                                        "geometry":{
+                                            "type":"Point",
+                                            "coordinates":[
+                                            -96.442478,
+                                            19.61809
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type":"Feature",
+                                        "properties":{
+                                            "client":"OceanaGold Corp.",
+                                            "project":"Didipio porphyry gold-copper deposit",
+                                            "Country":"Philippines",
+                                            "State\/Province":"Nueva Vizcaya",
+                                            "Nearest Town":"Didipio",
+                                            "lat":16.3342,
+                                            "long":121.4589,
+                                            "time":"January 2017 and March-April 2015",
+                                            "description":"Detailed drill core logging and interpretation of the Dinkidi breccia complex; including hydrothermal, volcanic, and intrusion-related breccias",
+                                            "img":"<img src=\".\/img\/projects\/c.JPG\">"
+                                        },
+                                        "geometry":{
+                                            "type":"Point",
+                                            "coordinates":[
+                                            121.4589,
+                                            16.3342
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type":"Feature",
+                                        "properties":{
+                                            "client":"Newcrest Mining Ltd.",
+                                            "project":"Seguela gold deposit",
+                                            "Country":"Cote d'Ivoire",
+                                            "State\/Province":"Worodougou Region",
+                                            "Nearest Town":"Seguela",
+                                            "lat":7.96,
+                                            "long":-6.644,
+                                            "time":"November 2016",
+                                            "description":"Detailed and descriptive drill core logging and establishment of a geologic framework",
+                                            "img":"<img src=\".\/img\/projects\/d.JPG\">"
+                                        },
+                                        "geometry":{
+                                            "type":"Point",
+                                            "coordinates":[
+                                            -6.644,
+                                            7.96
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type":"Feature",
+                                        "properties":{
+                                            "client":"Newcrest Mining Ltd.",
+                                            "project":"Wailevu West (Mt. Kasi) epithermal gold deposit",
+                                            "Country":"Fiji, Vanua Levu",
+                                            "State\/Province":"Wailevu",
+                                            "Nearest Town":"Savusavu",
+                                            "lat":-16.76535,
+                                            "long":179.02683,
+                                            "time":"September to October 2014",
+                                            "description":"Property-scale mapping, detailed rock library and field trip guide prepared for site geologists ",
+                                            "img":"<img src=\".\/img\/projects\/h.JPG\">"
+                                        },
+                                        "geometry":{
+                                            "type":"Point",
+                                            "coordinates":[
+                                            179.02683,
+                                            -16.76535
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type":"Feature",
+                                        "properties":{
+                                            "client":"GoldFields Ltd.",
+                                            "project":"Toodoggone Project",
+                                            "Country":"Canada",
+                                            "State\/Province":"British Columbia",
+                                            "Nearest Town":"Mackenzie",
+                                            "lat":57.130624,
+                                            "long":-126.919844,
+                                            "time":"August 2014",
+                                            "description":"Prospecting program and assessment report writing",
+                                            "img":"<img src=\".\/img\/projects\/f.JPG\">"
+                                        },
+                                        "geometry":{
+                                            "type":"Point",
+                                            "coordinates":[
+                                            -126.919844,
+                                            57.130624
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type":"Feature",
+                                        "properties":{
+                                            "client":"Durfeld Geological Management",
+                                            "project":"RedGold deposit",
+                                            "Country":"Canada",
+                                            "State\/Province":"British Columbia",
+                                            "Nearest Town":"Horsefly",
+                                            "lat":52.33277,
+                                            "long":-121.417299,
+                                            "time":"January to February 2020",
+                                            "description":"Compilation of trenching, drilling, geophysical, and geochemical data into a Leapfrog 3D geologic modelling for target generation",
+                                            "img":"<img src=\".\/img\/projects\/g.JPG\">"
+                                        },
+                                        "geometry":{
+                                            "type":"Point",
+                                            "coordinates":[
+                                            -121.417299,
+                                            52.33277
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type":"Feature",
+                                        "properties":{
+                                            "client":"Kinross Minera Chile Ltda.",
+                                            "project":"La Coipa epithermal gold-silver deposits",
+                                            "Country":"Chile",
+                                            "State\/Province":"Atacama",
+                                            "Nearest Town":"Copiapo",
+                                            "lat":-26.7,
+                                            "long":-69.5,
+                                            "time":"November 2015",
+                                            "description":"Detailed drill core logging and mapping of hydrothermal and volcanic breccias to establish a functional breccia logging scheme",
+                                            "img":"<img src=\".\/img\/projects\/e.JPG\">"
+                                        },
+                                        "geometry":{
+                                            "type":"Point",
+                                            "coordinates":[
+                                            -69.519248932857366,
+                                            -26.680610519133662
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                            
+                            // set marker style
+                            var lpgIcon = L.icon({
+                                iconUrl: 'img/lpgicon.png',
+                                iconSize: [50,50],
+                                iconAnchor: [18,50]
+
+                            });
+
+                            //set popup style
+                            function forEachFeature(feature, layer) {
+		                        var popupContent = 
+                                    "<table style='text-align:center; vertical-align:middle'"+">"+                                        
+                                        "<tr><h3>"+feature.properties.client+"</h3></tr>"+
+                                        "<tr><h6>"+feature.properties.project+"</h6></tr>"+
+                                        "<tr><h6>"+feature.properties.time+"</h6></tr>"+
+                                    "</table>";
+                                    //"<tr>"+feature.properties.img+"</tr></table>"
+                                layer.bindPopup(popupContent).on("click", clickZoom);                                
+                                }    
+                               
+                            // set center map on click
+                            function clickZoom(e) {                               
+                                map.panTo(e.target.getLatLng())
+                                // setView version with zoom
+                                //map.setView(e.target.getLatLng(), 2);                                
+                            }                            
+                            // create features    
+                            feat = L.geoJSON(projects, {
+                                pointToLayer: function(feature,latlng){                                    
+                                    return L.marker(latlng,{icon: lpgIcon});},
+                                onEachFeature: forEachFeature                    
+
+                            })
+                            
+                            feat.addTo(map);
+                        </script> 
+
+
                     <div class="portfolio-caption">
-                        <h4>Placeholder</h4>
-                        <p class="text-muted">Placeholder text</p>
+                        <!--<h4>For more information on the deliverables of each project</h4>-->
+                        <p class="text-muted">For more information</p>
+						<br>
+						<a href="#contact" class="page-scroll btn btn-xl sr-button">Contact Us</a>
                     </div>
-                </div>
-                <div class="col-lg-4 col-md-6 text-center portfolio-item">
-                    <a href="img/portfolio/fullsize/placeholder.jpg" class="portfolio-link" data-toggle="modal">
-                        <div class="portfolio-hover">
-                            <div class="portfolio-hover-content">
-                                <i class="fa fa-plus fa-3x"></i>
-                            </div>
-                        </div>
-                        <img src="img/portfolio/thumbnails/placeholder.jpg" class="img-responsive" alt="">
-                    </a>
-                    <div class="portfolio-caption">
-                        <h4>Placeholder</h4>
-                        <p class="text-muted">Placeholder text</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 text-center portfolio-item">
-                    <a href="img/portfolio/fullsize/placeholder.jpg" class="portfolio-link" data-toggle="modal">
-                        <div class="portfolio-hover">
-                            <div class="portfolio-hover-content">
-                                <i class="fa fa-plus fa-3x"></i>
-                            </div>
-                        </div>
-                        <img src="img/portfolio/thumbnails/placeholder.jpg" class="img-responsive" alt="">
-                    </a>
-                    <div class="portfolio-caption">
-                        <h4>Placeholder</h4>
-                        <p class="text-muted">Placeholder text</p>
-                    </div>
-                </div>
+                </div>             
 			</div>
 		</div>
-    </section>
+    </section> 
 
         <!-- Team Section -->
     <section id="team">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2 class="section-heading">Our Team</h2>
-                    <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+                    <h2 class="section-heading">The Team</h2>
+                    <!--<h3 class="section-subheading text-muted">Economic experience from a breadth of international projects includes epithermal gold deposits, porphyry copper-gold deposits, archean lode gold deposits, and layered PGE deposits.</h3>-->
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm-6">
                     <div class="team-member">
                         <img src="img/team/1.jpg" class="img-responsive img-circle" alt="">
-                        <h4>Jacqueline Blackwell</h4>
-                        <p class="text-muted">Consulting Geologist</p>
+                        <h4>Jacqueline Blackwell, Ph.D., P.Geo.</h4>
+                        <p class="text-muted">Principal Consulting Geologist and President</p>
+						<p class="text-muted">Jacqueline has a Ph.D. in volcanology and economic geology from the University of Tasmania (CODES), a B.Sc. in Earth and Ocean Science 
+											from the University of Victoria, and 14 years in the exploration industry. She is a registered Professional Geologist with the 
+											Engineers and Geoscientists British Columbia (EGBC) and the Professional Geoscientists Ontario (PGO). 
+											<br>Jacqueline is a specialist in recognition and classification of volcanic and hydrothermal lithofacies in altered 
+											and mineralized terranes with exploration experience in orogenic gold, porphyry copper-gold, and epithermal gold deposits. 
                         <ul class="list-inline social-buttons">
-                            <li><a href="#"><i class="fa fa-twitter"></i></a>
                             </li>
-                            <li><a href="#"><i class="fa fa-facebook"></i></a>
-                            </li>
-                            <li><a href="#"><i class="fa fa-linkedin"></i></a>
+                            <li><a href="https://www.linkedin.com/in/jacqueline-blackwell-57400852/"><i class="fa fa-linkedin"></i></a>
                             </li>
                         </ul>
                     </div>
@@ -204,35 +450,36 @@
                 <div class="col-sm-6">
                     <div class="team-member">
                         <img src="img/team/2.jpg" class="img-responsive img-circle" alt="">
-                        <h4>Tim Stubley</h4>
-                        <p class="text-muted">Consulting Geologist</p>
+                        <h4>Tim Stubley, B.Sc.(Hons)</h4>
+                        <p class="text-muted">Principal Consulting Geologist and Vice President</p>
+						<p class="text-muted">Tim got his start in the exploration industry 18 years ago as a field-hand on projects in northern Quebec and central British Columbia, Canada, 
+												and in 2010 completed a B.Sc. with Honours in Geology from the University of Tasmania. He is currently undertaking a modular-based Masters in Mineral Exploration at Laurentian University. 
+												<br>Tim specializes in exploration project management including mapping and drilling programs in brownfields and remote helicopter-supported field settings.
+												<br><br>
+</p>
                         <ul class="list-inline social-buttons">
-                            <li><a href="#"><i class="fa fa-twitter"></i></a>
-                            </li>
-                            <li><a href="#"><i class="fa fa-facebook"></i></a>
-                            </li>
                             <li><a href="#"><i class="fa fa-linkedin"></i></a>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <!--<div class="row">
                 <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <p class="large text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut eaque, laboriosam veritatis, quos non quis ad perspiciatis, totam corporis ea, alias ut unde.</p>
+                    <p class="large text-muted">Economic experience includes epithermal gold deposits, porphyry copper-gold deposits, archean lode gold deposits, and layered PGE deposits.</p>
                 </div>
-            </div>
+            </div>-->
         </div>
     </section>
     <!-- Contact Section -->
-	<section id="contact">
+	<section id="contact" data-parallax="scroll" data-image-src="../img/footer.jpg">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 text-center">
                     <h2 class="section-heading">Contact Us</h2>
                     <hr class="text-primary">                  
                 </div>
-                <div class="col-lg-8 col-lg-offset-2 text-center">
+                <div class="col-lg-8 col-lg-offset-2 text-center facolor">
                     <i class="fa fa-envelope-o fa-3x sr-contact"></i>
                     <p><a href="mailto:info@longpointgeo.com">info@longpointgeo.com</a></p>
                 </div>
@@ -243,7 +490,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4">
-                    <span class="copyright">Copyright &copy; Long Point Geologic Ltd. 2019</span>
+                    <span class="copyright">Copyright &copy; Long Point Geologic Ltd. 2023</span>
                 </div>
             </div>
         </div>
@@ -266,7 +513,17 @@
 
     <!-- Theme JavaScript -->
     <script src="js/agency.min.js"></script>
+	
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-79179520-2"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
 
+	  gtag('config', 'UA-79179520-2');
+	</script>
+	
 </body>
 
 </html>

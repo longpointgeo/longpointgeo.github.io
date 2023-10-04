@@ -29,6 +29,14 @@
 	<link href='https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.css' rel='stylesheet' />
 	<script src='https://api.mapbox.com/mapbox.js/plugins/turf/v3.0.11/turf.min.js'></script>
 
+    <!-- Leaflet JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -161,154 +169,249 @@
             <div class="row">
                 <div class="col-lg-12 text-center portfolio-item">
                     <div id='map' style='width: auto; height: 500px;'></div>
-					<script>
-						mapboxgl.accessToken = 'pk.eyJ1IjoibG9uZ3BvaW50Z2VvIiwiYSI6ImNrYnNnanI0ZjAxYjAyem9jc2x6MGc2cmQifQ.HY29j88GRHL3KBKkzCEVlw';
-						var map = new mapboxgl.Map({
-						container: 'map',
-						style: 'mapbox://styles/longpointgeo/ckc585bl402491iltpo3nxjsx',
-						center: [-2.991725, 40.814306],
-						zoom: 1
-						});
-						
-						// load project locations
-						map.on('load', function () {													
-							map.addSource('projects', {
-								type: 'geojson',
-								data: './webmaps/projloc.geojson',
-								cluster: true,
-								clusterMaxZoom: 14, // Max zoom to cluster points on
-								clusterRadius: 100 // Radius of each cluster when clustering points (defaults to 50)
-							});
-							
-							// Fit map bounds to projects layer							
-							map.on('sourcedata', function (e) {
-								if (e.sourceId !== 'projects' || !e.isSourceLoaded) return
-								var f = map.querySourceFeatures('projects')
-								if (f.length === 0) return
-								var bbox = turf.bbox({
-									type: 'FeatureCollection',
-									features: f
-								});
-								map.fitBounds(bbox, {padding: 20});    
-								})
-							
-							// load map icons
-							map.loadImage(
-								'./img/lpgicon.png',
-								function(error, image) {
-									if (error) throw error;
-									map.addImage('lpgicon', image);
+                        <script>
+                            const map = L.map('map').setView([20, 0], 2);
+                            //const tiles = L.tileLayer('https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile/{z}/{y}/{x}', {
+	                            //maxZoom: 20,
+	                            //attribution: 'Tiles courtesy of the <a href="https://usgs.gov/">U.S. Geological Survey</a>'
+                            
+                            const tiles = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+                                attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
+                                maxZoom: 20
+                            
+                            }).addTo(map);
 
-								// add clustered project locations to the map								
-								map.addLayer({
-									id: 'clusters',
-									type: 'circle',
-									source: 'projects',
-									filter: ['has', 'point_count'],
-									paint: {
-										'circle-color': '#265E33',											
-										'circle-radius': 25,
-										'circle-opacity': 0.75
-									}
-								});
-								
-								// add cluster count to clusters
-								map.addLayer({
-									id: 'cluster-count',
-									type: 'symbol',
-									source: 'projects',
-									filter: ['has', 'point_count'],
-									layout: {
-									'text-field': '{point_count_abbreviated}',
-									'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
-									'text-size': 18
-									},
-									paint: {
-									'text-color': '#ffffff'
-									}
-								});
-								
-								// add un-clustered project locations to the map
-								map.addLayer({
-									id: 'project',
-									type: 'symbol',
-									source: 'projects',
-									filter: ['!',['has', 'point_count']],
-									layout: {
-										'icon-image': 'lpgicon',
-										'icon-size': 0.15,
-										'icon-offset': [80,-190]
-									}
-								});
-							});
-							
-							// inspect a cluster on click
-							map.on('click', 'clusters', function(e) {
-								var features = map.queryRenderedFeatures(e.point, {
-									layers: ['clusters']
-								});
-								var clusterId = features[0].properties.cluster_id;
-								map.getSource('projects').getClusterExpansionZoom(
-									clusterId,
-									function(err, zoom) {
-										if (err) return;
- 
-										map.easeTo({
-											center: features[0].geometry.coordinates,
-											zoom: zoom
-										});
-									}
-								);															
-							});
-							
-							// define unclustered on-click popups
-							map.on('click', 'project', function(e) {
-								var coordinates = e.features[0].geometry.coordinates.slice();
-								var img = e.features[0].properties.img;
-								var client = e.features[0].properties.Client;
-								var time = e.features[0].properties.time;
-								var project = e.features[0].properties.Project;							
- 
-							// Ensure that if the map is zoomed out such that multiple
-							// copies of the feature are visible, the popup appears
-							// over the copy being pointed to.
-							while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-							coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-							}
-							
-							// ease map extents to project locations on click
-							map.easeTo({
-								center: e.features[0].geometry.coordinates,
-								speed: 0.025,
-								curve: 0.05,
-								zoom: 2
-							});
-							 
-							// create popup							
-							new mapboxgl.Popup()
-							.setLngLat(coordinates)
-							.setHTML("Client: " + client +"<br>"+
-									time +"<br>"+
-									project +"<br>"+
-									img
-									)
-							.addTo(map);
-							});
-							 
-							// Change the cursor to a pointer when the mouse is over the projects layer.
-							map.on('mouseenter', 'project', function() {
-							map.getCanvas().style.cursor = 'pointer';
-							});
-							 
-							// Change it back to a pointer when it leaves.
-							map.on('mouseleave', 'project', function() {
-							map.getCanvas().style.cursor = '';
-							});
-						});
-					</script>
+                            // add projects to map
+                            var projects = {
+                                "type":"FeatureCollection",
+                                "name":"projloc",
+                                "crs":{
+                                    "type":"name",
+                                    "properties":{
+                                        "name":"urn:ogc:def:crs:OGC:1.3:CRS84"
+                                    }
+                                },
+                                "features":[
+                                    {
+                                        "type":"Feature",
+                                        "properties":{
+                                            "client":"Gold Candle Ltd.",
+                                            "project":"Kerr-Addison Mine",
+                                            "Country":"Canada",
+                                            "State\/Province":"Ontario",
+                                            "Nearest Town":"Virginiatown",
+                                            "lat":48.137563,
+                                            "long":-79.57929,
+                                            "time":"March 2015 to Present",
+                                            "description":"Property and regional-scale surface exploration programs",
+                                            "img":"<img src=\".\/img\/projects\/a.JPG\">"
+                                        },
+                                        "geometry":{
+                                            "type":"Point",
+                                            "coordinates":[
+                                            -79.57929,
+                                            48.137563
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type":"Feature",
+                                        "properties":{
+                                            "client":"Almadex Minerals Ltd.",
+                                            "project":"El Cobre porphyry gold deposit",
+                                            "Country":"Mexico",
+                                            "State\/Province":"Veracruz",
+                                            "Nearest Town":"Tinajitas",
+                                            "lat":19.61809,
+                                            "long":-96.442478,
+                                            "time":"April – May 2018",
+                                            "description":"Lithofacies classification and interpretation",
+                                            "img":"<img src=\".\/img\/projects\/b.jpeg\">"
+                                        },
+                                        "geometry":{
+                                            "type":"Point",
+                                            "coordinates":[
+                                            -96.442478,
+                                            19.61809
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type":"Feature",
+                                        "properties":{
+                                            "client":"OceanaGold Corp.",
+                                            "project":"Didipio porphyry gold-copper deposit",
+                                            "Country":"Philippines",
+                                            "State\/Province":"Nueva Vizcaya",
+                                            "Nearest Town":"Didipio",
+                                            "lat":16.3342,
+                                            "long":121.4589,
+                                            "time":"January 2017 and March-April 2015",
+                                            "description":"Detailed drill core logging and interpretation of the Dinkidi breccia complex; including hydrothermal, volcanic, and intrusion-related breccias",
+                                            "img":"<img src=\".\/img\/projects\/c.JPG\">"
+                                        },
+                                        "geometry":{
+                                            "type":"Point",
+                                            "coordinates":[
+                                            121.4589,
+                                            16.3342
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type":"Feature",
+                                        "properties":{
+                                            "client":"Newcrest Mining Ltd.",
+                                            "project":"Seguela gold deposit",
+                                            "Country":"Cote d'Ivoire",
+                                            "State\/Province":"Worodougou Region",
+                                            "Nearest Town":"Seguela",
+                                            "lat":7.96,
+                                            "long":-6.644,
+                                            "time":"November 2016",
+                                            "description":"Detailed and descriptive drill core logging and establishment of a geologic framework",
+                                            "img":"<img src=\".\/img\/projects\/d.JPG\">"
+                                        },
+                                        "geometry":{
+                                            "type":"Point",
+                                            "coordinates":[
+                                            -6.644,
+                                            7.96
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type":"Feature",
+                                        "properties":{
+                                            "client":"Newcrest Mining Ltd.",
+                                            "project":"Wailevu West (Mt. Kasi) epithermal gold deposit",
+                                            "Country":"Fiji, Vanua Levu",
+                                            "State\/Province":"Wailevu",
+                                            "Nearest Town":"Savusavu",
+                                            "lat":-16.76535,
+                                            "long":179.02683,
+                                            "time":"September to October 2014",
+                                            "description":"Property-scale mapping, detailed rock library and field trip guide prepared for site geologists ",
+                                            "img":"<img src=\".\/img\/projects\/h.JPG\">"
+                                        },
+                                        "geometry":{
+                                            "type":"Point",
+                                            "coordinates":[
+                                            179.02683,
+                                            -16.76535
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type":"Feature",
+                                        "properties":{
+                                            "client":"GoldFields Ltd.",
+                                            "project":"Toodoggone Project",
+                                            "Country":"Canada",
+                                            "State\/Province":"British Columbia",
+                                            "Nearest Town":"Mackenzie",
+                                            "lat":57.130624,
+                                            "long":-126.919844,
+                                            "time":"August 2014",
+                                            "description":"Prospecting program and assessment report writing",
+                                            "img":"<img src=\".\/img\/projects\/f.JPG\">"
+                                        },
+                                        "geometry":{
+                                            "type":"Point",
+                                            "coordinates":[
+                                            -126.919844,
+                                            57.130624
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type":"Feature",
+                                        "properties":{
+                                            "client":"Durfeld Geological Management",
+                                            "project":"RedGold deposit",
+                                            "Country":"Canada",
+                                            "State\/Province":"British Columbia",
+                                            "Nearest Town":"Horsefly",
+                                            "lat":52.33277,
+                                            "long":-121.417299,
+                                            "time":"January to February 2020",
+                                            "description":"Compilation of trenching, drilling, geophysical, and geochemical data into a Leapfrog 3D geologic modelling for target generation",
+                                            "img":"<img src=\".\/img\/projects\/g.JPG\">"
+                                        },
+                                        "geometry":{
+                                            "type":"Point",
+                                            "coordinates":[
+                                            -121.417299,
+                                            52.33277
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type":"Feature",
+                                        "properties":{
+                                            "client":"Kinross Minera Chile Ltda.",
+                                            "project":"La Coipa epithermal gold-silver deposits",
+                                            "Country":"Chile",
+                                            "State\/Province":"Atacama",
+                                            "Nearest Town":"Copiapo",
+                                            "lat":-26.7,
+                                            "long":-69.5,
+                                            "time":"November 2015",
+                                            "description":"Detailed drill core logging and mapping of hydrothermal and volcanic breccias to establish a functional breccia logging scheme",
+                                            "img":"<img src=\".\/img\/projects\/e.JPG\">"
+                                        },
+                                        "geometry":{
+                                            "type":"Point",
+                                            "coordinates":[
+                                            -69.519248932857366,
+                                            -26.680610519133662
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                            
+                            // set marker style
+                            var lpgIcon = L.icon({
+                                iconUrl: 'img/lpgicon.png',
+                                iconSize: [50,50],
+                                iconAnchor: [18,50]
+
+                            });
+
+                            //set popup style
+                            function forEachFeature(feature, layer) {
+		                        var popupContent = 
+                                    "<table style='text-align:center; vertical-align:middle'"+">"+                                        
+                                        "<tr><h3>"+feature.properties.client+"</h3></tr>"+
+                                        "<tr><h6>"+feature.properties.project+"</h6></tr>"+
+                                        "<tr><h6>"+feature.properties.time+"</h6></tr>"+
+                                    "</table>";
+                                    //"<tr>"+feature.properties.img+"</tr></table>"
+                                layer.bindPopup(popupContent).on("click", clickZoom);                                
+                                }    
+                               
+                            // set center map on click
+                            function clickZoom(e) {                               
+                                map.panTo(e.target.getLatLng())
+                                // setView version with zoom
+                                //map.setView(e.target.getLatLng(), 2);                                
+                            }                            
+                            // create features    
+                            feat = L.geoJSON(projects, {
+                                pointToLayer: function(feature,latlng){                                    
+                                    return L.marker(latlng,{icon: lpgIcon});},
+                                onEachFeature: forEachFeature                    
+
+                            })
+                            
+                            feat.addTo(map);
+                        </script> 
+
+
                     <div class="portfolio-caption">
                         <!--<h4>For more information on the deliverables of each project</h4>-->
-                        <p class="text-muted">For more information on the deliverables of each project</p>
+                        <p class="text-muted">For more information</p>
 						<br>
 						<a href="#contact" class="page-scroll btn btn-xl sr-button">Contact Us</a>
                     </div>
@@ -387,7 +490,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4">
-                    <span class="copyright">Copyright &copy; Long Point Geologic Ltd. 2020</span>
+                    <span class="copyright">Copyright &copy; Long Point Geologic Ltd. 2023</span>
                 </div>
             </div>
         </div>
